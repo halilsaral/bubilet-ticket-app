@@ -3,16 +3,16 @@ import TripCard from "@/src/components/trips/TripCard";
 import Link from "next/link";
 import { Trip } from "@/src/lib/types";
 
-// The props type is simplified to just define the shape of searchParams.
-type InquiryPageProps = {
+// We define the props directly in the function signature instead of a separate type.
+export default async function InquiryPage({
+  searchParams,
+}: {
   searchParams: {
     from?: string;
     to?: string;
     date?: string;
   };
-};
-
-export default async function InquiryPage({ searchParams }: InquiryPageProps) {
+}) {
   const { from, to, date } = searchParams;
 
   if (!from || !to || !date) {
