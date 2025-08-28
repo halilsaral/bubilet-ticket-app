@@ -1,16 +1,19 @@
 import { getTripById } from "@/src/services/apiClient";
 import SeatSelector from "@/src/components/trips/SeatSelector";
 
-// We define the props directly in the function signature.
+// Next.js 15'te params Promise tipinde olmalı
 export default async function TripDetailsPage({
   params,
 }: {
-  params: {
+  params: Promise<{
     id: string; // The [id] from the URL comes here.
-  };
+  }>;
 }) {
+  // params'ı await ile çözümle
+  const resolvedParams = await params;
+
   // We fetch the data for the specific trip using the id from the URL.
-  const trip = await getTripById(params.id);
+  const trip = await getTripById(resolvedParams.id);
 
   if (!trip) {
     return <div>Sefer bulunamadı.</div>;
