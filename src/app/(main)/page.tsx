@@ -8,10 +8,9 @@ export default function HomePage() {
         Hayalindeki Yolculuğa Biletini Al
       </h1>
       <p className="mt-4 text-lg leading-6 text-white/70">
-        Türkiye'nin dört bir yanına konforlu ve güvenli seyahat imkanı.
+        Türkiye&apos;nin dört bir yanına konforlu ve güvenli seyahat imkanı.
       </p>
-      
-      
+
       <div className="mt-10">
         <TripSearchForm />
       </div>

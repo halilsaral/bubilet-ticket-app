@@ -35,25 +35,59 @@ export default function LoginForm() {
       } else {
         setError("E-posta veya parola hatalı.");
       }
-    } catch (err: any) {
-      setError(err.message || "Giriş sırasında bir hata oluştu.");
+    } catch (err: unknown) {
+      // 'any' yerine 'unknown'
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Giriş sırasında beklenmedik bir hata oluştu.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
-  
-  const inputClasses = "w-full rounded-md bg-white/5 px-3 py-2 text-white outline-none focus:ring-2 focus:ring-rose-500 border border-transparent";
+
+  const inputClasses =
+    "w-full rounded-md bg-white/5 px-3 py-2 text-white outline-none focus:ring-2 focus:ring-rose-500 border border-transparent";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && <p className="text-red-400 text-sm text-center">{error}</p>}
       <div>
-        <label htmlFor="email" className="block text-xs font-medium text-white/60 mb-1.5">E-posta</label>
-        <input id="email" name="email" type="email" autoComplete="email" required className={inputClasses} onChange={handleChange} value={formData.email} />
+        <label
+          htmlFor="email"
+          className="block text-xs font-medium text-white/60 mb-1.5"
+        >
+          E-posta
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          className={inputClasses}
+          onChange={handleChange}
+          value={formData.email}
+        />
       </div>
       <div>
-        <label htmlFor="password" className="block text-xs font-medium text-white/60 mb-1.5">Parola</label>
-        <input id="password" name="password" type="password" autoComplete="current-password" required className={inputClasses} onChange={handleChange} value={formData.password} />
+        <label
+          htmlFor="password"
+          className="block text-xs font-medium text-white/60 mb-1.5"
+        >
+          Parola
+        </label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          required
+          className={inputClasses}
+          onChange={handleChange}
+          value={formData.password}
+        />
       </div>
       <div>
         <button
