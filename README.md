@@ -55,6 +55,6 @@ Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
 ### 1. Projeyi Klonlama
 
 ```bash
-git clone [https://github.com/halilsaral/bubilet-ticket-app.git](https://github.com/halilsaral/bubilet-ticket-app.git)
+git clone https://github.com/halilsaral/bubilet-ticket-app.git
 cd bubilet-ticket-app
 ```
