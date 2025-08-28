@@ -3,17 +3,19 @@ import TripCard from "@/src/components/trips/TripCard";
 import Link from "next/link";
 import { Trip } from "@/src/lib/types";
 
-// We define the props directly in the function signature instead of a separate type.
-export default async function InquiryPage({
-  searchParams,
-}: {
-  searchParams: {
+// Next.js 15'te searchParams artık Promise tipinde
+interface PageProps {
+  searchParams: Promise<{
     from?: string;
     to?: string;
     date?: string;
-  };
-}) {
-  const { from, to, date } = searchParams;
+  }>;
+}
+
+export default async function InquiryPage({ searchParams }: PageProps) {
+  // searchParams'ı await ile çözümle
+  const params = await searchParams;
+  const { from, to, date } = params;
 
   if (!from || !to || !date) {
     return (
@@ -43,7 +45,6 @@ export default async function InquiryPage({
           <span className="font-semibold">{date}</span> tarihindeki seferler
         </p>
       </div>
-
       {trips.length > 0 ? (
         <div className="space-y-4">
           {trips.map((trip) => (
