@@ -7,7 +7,9 @@ type TripDetailsPageProps = {
   };
 };
 
-export default async function TripDetailsPage({ params }: TripDetailsPageProps) {
+export default async function TripDetailsPage({
+  params,
+}: TripDetailsPageProps) {
   // URL'den gelen ID ile ilgili seferin verilerini çekiyoruz.
   const trip = await getTripById(params.id);
 

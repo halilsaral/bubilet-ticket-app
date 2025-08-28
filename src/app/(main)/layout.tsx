@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "@/src/components/core/Navbar";
+import Footer from "@/src/components/core/Footer"; // 1. Footer'ı import et
 
 export default function MainLayout({
   children,
@@ -7,13 +8,10 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <Navbar /> {/* Navbar'ı en üste ekliyoruz */}
-      <main className="p-4">
-        {" "}
-        {/* Sayfa içeriğine biraz boşluk verelim */}
-        {children}
-      </main>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow p-4">{children}</main>
+      <Footer /> {/* 2. Footer'ı en alta ekle */}
     </div>
   );
 }

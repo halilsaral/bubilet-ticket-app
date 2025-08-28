@@ -1,97 +1,106 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya"];
+import { useMemo, useState } from "react";
+import { TR_CITIES } from "@/src/lib/cities"; // Oluşturduğumuz şehirler dosyasını import et
 
 export default function TripSearchForm() {
   const router = useRouter();
-  const [from, setFrom] = useState("İstanbul");
-  const [to, setTo] = useState("Ankara");
-  
-  // Bugünün tarihini YYYY-MM-DD formatında alarak varsayılan değer yapalım
-  const today = new Date().toISOString().split('T')[0];
-  const [date, setDate] = useState(today);
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  // Şehirleri sadece bir kere, alfabetik sırada hesapla
+  const sortedCities = useMemo(
+    () => [...TR_CITIES].sort((a, b) => a.localeCompare(b, "tr")),
+    []
+  );
+
+  const todayIso = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const [from, setFrom] = useState<string>("");
+  const [to, setTo] = useState<string>("");
+  const [date, setDate] = useState<string>(todayIso);
+
+  const canSearch: boolean = !!from && !!to && !!date;
+  const sameCity: boolean = !!from && !!to && from === to;
+
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!canSearch || sameCity) return;
     
-    if (from === to) {
-      alert("Kalkış ve varış yeri aynı olamaz!");
-      return;
-    }
-
-    // Kullanıcıyı, arama parametreleriyle birlikte sonuçlar sayfasına yönlendir.
-    // Örn: /inquiry?from=İstanbul&to=Ankara&date=2025-09-15
+    // Bizim projemizdeki yönlendirme yapısı `/inquiry` olduğu için burayı koruyoruz.
     router.push(`/inquiry?from=${from}&to=${to}&date=${date}`);
-  };
+  }
 
   return (
     <form
-      onSubmit={handleSearch}
-      className="p-8 bg-white rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-4 gap-6 items-end"
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 rounded-xl border border-white/10 bg-gray-900/80 p-4 backdrop-blur-sm md:flex-row md:items-end md:gap-6"
     >
-      {/* Kalkış Yeri */}
-      <div className="col-span-1">
-        <label htmlFor="from" className="block text-sm font-medium text-gray-700">
-          Nereden
-        </label>
+      {/* Nereden */}
+      <div className="flex-1">
+        <label className="mb-1.5 block text-xs font-medium text-white/60">Nereden?</label>
         <select
-          id="from"
           value={from}
           onChange={(e) => setFrom(e.target.value)}
-          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          className="w-full rounded-md bg-white/5 px-3 py-2 text-white outline-none appearance-none focus:ring-2 focus:ring-rose-500"
+          aria-label="Kalkış ili"
+          required
         >
-          {cities.map((city) => (
-            <option key={city} value={city}>
-              {city}
+          <option value="" disabled hidden>Şehir seçin</option>
+          {sortedCities.map((c) => (
+            <option key={c} value={c} className="bg-gray-800 text-white">
+              {c}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Varış Yeri */}
-      <div className="col-span-1">
-        <label htmlFor="to" className="block text-sm font-medium text-gray-700">
-          Nereye
-        </label>
+      {/* Nereye */}
+      <div className="flex-1">
+        <label className="mb-1.5 block text-xs font-medium text-white/60">Nereye?</label>
         <select
-          id="to"
           value={to}
           onChange={(e) => setTo(e.target.value)}
-          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          className="w-full rounded-md bg-white/5 px-3 py-2 text-white outline-none appearance-none focus:ring-2 focus:ring-rose-500"
+          aria-label="Varış ili"
+          required
         >
-          {cities.map((city) => (
-            <option key={city} value={city}>
-              {city}
+          <option value="" disabled hidden>Şehir seçin</option>
+          {sortedCities.map((c) => (
+            <option key={c} value={c} className="bg-gray-800 text-white">
+              {c}
             </option>
           ))}
         </select>
       </div>
 
       {/* Tarih */}
-      <div className="col-span-1">
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-          Gidiş Tarihi
-        </label>
+      <div>
+        <label className="mb-1.5 block text-xs font-medium text-white/60">Tarih</label>
         <input
           type="date"
-          id="date"
+          min={todayIso}
           value={date}
-          min={today} // Geçmiş bir tarihi seçmeyi engeller
           onChange={(e) => setDate(e.target.value)}
-          className="mt-1 block w-full pl-3 pr-4 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          className="rounded-md bg-white/5 px-3 py-2 text-white outline-none focus:ring-2 focus:ring-rose-500"
+          required
         />
       </div>
 
-      {/* Arama Butonu */}
-      <div className="col-span-1">
+      {/* Ara butonu */}
+      <div className="flex items-end">
         <button
           type="submit"
-          className="w-full justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          disabled={!canSearch || sameCity}
+          className={
+            "w-full rounded-md px-6 py-2 font-medium transition-colors md:w-auto " +
+            (sameCity
+              ? "bg-white/5 text-amber-400 cursor-not-allowed"
+              : canSearch
+              ? "bg-rose-600 text-white hover:bg-rose-500"
+              : "bg-white/5 text-white/40 cursor-not-allowed")
+          }
+          title={sameCity ? "Kalkış ve varış ili farklı olmalı" : ""}
         >
-          Sefer Ara
+          Ara
         </button>
       </div>
     </form>
