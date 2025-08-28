@@ -4,7 +4,7 @@ import { memo, useCallback, useMemo } from "react";
 import clsx from "clsx";
 import { Seat } from "@/src/lib/types";
 
-// Prop tiplerini tanımlayalım
+// Prop tipleri
 type SeatMapProps = {
   seats: Seat[];
   selected: number[];

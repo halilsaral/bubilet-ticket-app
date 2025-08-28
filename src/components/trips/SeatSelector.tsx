@@ -6,12 +6,10 @@ import { useAuthStore } from "@/src/store/authStore";
 import SeatMap from "./SeatMap";
 import { useRouter } from "next/navigation";
 
-// 1. ADIM: Doğru prop tipini burada tanımlıyoruz.
 type SeatSelectorProps = {
   initialTrip: Trip;
 };
 
-// 2. ADIM: Tanımladığımız doğru prop tipini burada kullanıyoruz.
 export default function SeatSelector({ initialTrip }: SeatSelectorProps) {
   const router = useRouter();
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
@@ -57,7 +55,7 @@ export default function SeatSelector({ initialTrip }: SeatSelectorProps) {
     );
   }
 
-  // Sayfanın geri kalanı...
+  // Sayfanın geri kalanı
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-white">
       {/* Sol Taraf: Koltuk Haritası */}

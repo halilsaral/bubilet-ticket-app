@@ -16,7 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // suppressHydrationWarning uyarısını engellemek için html etiketine eklenir.
     <html lang="tr" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider

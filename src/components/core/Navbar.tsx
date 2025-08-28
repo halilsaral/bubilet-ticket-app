@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/src/store/authStore";
 
-// A small utility for combining class names
+
 function clsx(...args: Array<string | false | null | undefined>) {
   return args.filter(Boolean).join(" ");
 }
@@ -18,11 +18,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  
-  // Get authentication state from our Zustand store
+
   const { isAuthenticated, user, logout } = useAuthStore();
 
-  // A state to prevent hydration errors with localStorage
+
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);

@@ -2,12 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { TR_CITIES } from "@/src/lib/cities"; // Oluşturduğumuz şehirler dosyasını import et
+import { TR_CITIES } from "@/src/lib/cities";
 
 export default function TripSearchForm() {
   const router = useRouter();
 
-  // Şehirleri sadece bir kere, alfabetik sırada hesapla
   const sortedCities = useMemo(
     () => [...TR_CITIES].sort((a, b) => a.localeCompare(b, "tr")),
     []
@@ -25,7 +24,6 @@ export default function TripSearchForm() {
     e.preventDefault();
     if (!canSearch || sameCity) return;
     
-    // Bizim projemizdeki yönlendirme yapısı `/inquiry` olduğu için burayı koruyoruz.
     router.push(`/inquiry?from=${from}&to=${to}&date=${date}`);
   }
 

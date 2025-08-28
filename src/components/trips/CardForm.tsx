@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-// YENİ: react-imask'ten IMaskInput'u import ediyoruz
 import { IMaskInput } from "react-imask";
 
 type CardFormData = {
@@ -47,7 +46,6 @@ export default function CardForm({ isLoading, onSubmit }: CardFormProps) {
         >
           Kart Numarası
         </label>
-        {/* YENİ: IMaskInput bileşenini kullanıyoruz */}
         <IMaskInput
           mask="0000 0000 0000 0000"
           value={formData.cardNumber}
@@ -67,7 +65,6 @@ export default function CardForm({ isLoading, onSubmit }: CardFormProps) {
           >
             Son Kullanma Tarihi
           </label>
-          {/* YENİ: IMaskInput bileşenini kullanıyoruz */}
           <IMaskInput
             mask="00/00"
             value={formData.expiryDate}
@@ -88,7 +85,6 @@ export default function CardForm({ isLoading, onSubmit }: CardFormProps) {
           >
             CVV
           </label>
-          {/* CVV için normal input kalabilir */}
           <input
             id="cvv"
             name="cvv"

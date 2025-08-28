@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "@/src/components/core/Navbar";
-import Footer from "@/src/components/core/Footer"; // 1. Footer'ı import et
+import Footer from "@/src/components/core/Footer";
 
 export default function MainLayout({
   children,

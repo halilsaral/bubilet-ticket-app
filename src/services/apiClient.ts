@@ -1,9 +1,8 @@
 import { Trip, User, UserCredentials } from "../lib/types";
 
-// .env.local dosyasından API adresimizi alıyoruz.
+// API adresi
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// Hata yönetimi için özel bir fonksiyon
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const error = await response.json();

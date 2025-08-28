@@ -8,7 +8,6 @@ import { SavedCard } from "@/src/lib/types";
 import clsx from "clsx";
 import { IMaskInput } from 'react-imask';
 
-// CardForm bileşeni ve diğer yardımcılar burada yer alıyor...
 type CardFormData = { cardNumber: string; expiryDate: string; cvv: string; };
 type CardFormProps = { isLoading: boolean; onSubmit: (data: CardFormData, saveCard: boolean) => void; };
 
@@ -88,8 +87,6 @@ export default function PaymentPage() {
         return (<div className="flex justify-center items-center h-96"><p>Yükleniyor...</p></div>);
     }
 
-    // --- KESİN ÇÖZÜM BURADA ---
-    // `user.savedCards`'ın bir dizi olduğundan emin ol. Değilse, boş bir dizi kullan.
     const savedCards = Array.isArray(user.savedCards) ? user.savedCards : [];
 
     return (

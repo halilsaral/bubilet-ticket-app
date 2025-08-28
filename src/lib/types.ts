@@ -1,6 +1,4 @@
-// Dosya Yolu: src/lib/types.ts
 
-// Bir koltuğun yapısını tanımlar.
 export type Seat = {
   number: number;
   taken: boolean;
@@ -18,7 +16,6 @@ export type Trip = {
   seats: Seat[];
 };
 
-// YENİ: Kayıtlı bir kartın yapısını tanımlar.
 export type SavedCard = {
   cardNumber: string;
   expiryDate: string;
@@ -34,8 +31,7 @@ export type User = {
   password: string;
   cinsiyet: "male" | "female";
   dogumTarihi: string;
-  savedCards?: SavedCard[]; // GÜNCELLEME: Kayıtlı kartlar alanı eklendi.
-  // Soru işareti (?) bu alanın zorunlu olmadığını belirtir.
+  savedCards?: SavedCard[]; 
 };
 
 // Kullanıcı girişi için kullanılacak veri yapısı.

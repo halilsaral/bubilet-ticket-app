@@ -2,7 +2,6 @@ import TripSearchForm from "@/src/components/trips/TripSearchForm";
 
 export default function HomePage() {
   return (
-    // Arka planı koyu ve metinleri açık renk yapıyoruz
     <div className="container mx-auto mt-10 text-center">
       <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
         Hayalindeki Yolculuğa Biletini Al
