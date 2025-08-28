@@ -3,19 +3,16 @@ import TripCard from "@/src/components/trips/TripCard";
 import Link from "next/link";
 import { Trip } from "@/src/lib/types";
 
-// Next.js 15'te searchParams artık Promise tipinde
-interface PageProps {
-  searchParams: Promise<{
+type InquiryPageProps = {
+  searchParams: {
     from?: string;
     to?: string;
     date?: string;
-  }>;
-}
+  };
+};
 
-export default async function InquiryPage({ searchParams }: PageProps) {
-  // searchParams'ı await ile çözümle
-  const params = await searchParams;
-  const { from, to, date } = params;
+export default async function InquiryPage({ searchParams }: InquiryPageProps) {
+  const { from, to, date } = searchParams;
 
   if (!from || !to || !date) {
     return (
@@ -33,7 +30,17 @@ export default async function InquiryPage({ searchParams }: PageProps) {
     );
   }
 
-  const trips: Trip[] = await getTrips(from, to, date);
+  let trips: Trip[] = []; // Varsayılan olarak boş bir dizi tanımla
+  try {
+    const result = await getTrips(from, to, date);
+    // Gelen sonucun bir dizi olduğundan emin ol, değilse boş dizi ata
+    if (Array.isArray(result)) {
+      trips = result;
+    }
+  } catch (error) {
+    console.error("Seferler çekilirken hata oluştu:", error);
+    // Hata durumunda da trips boş bir dizi olarak kalacak
+  }
 
   return (
     <div className="container mx-auto py-8">
@@ -45,6 +52,7 @@ export default async function InquiryPage({ searchParams }: PageProps) {
           <span className="font-semibold">{date}</span> tarihindeki seferler
         </p>
       </div>
+
       {trips.length > 0 ? (
         <div className="space-y-4">
           {trips.map((trip) => (
